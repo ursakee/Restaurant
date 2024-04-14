@@ -1,0 +1,136 @@
+
+Table persons {
+  id int [primary key]
+  last_name varchar
+  first_name varchar
+  date_of_birth date
+  date_of_hiring date
+  insert_date date
+}
+
+Table users{
+  id int [primary key]
+  id_person int
+  email varchar
+  password varchar
+  id_role int
+  last_login datetime
+  insert_date date
+}
+
+Ref: users.id_person < persons.id
+
+Table roles{
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Ref: users.id_role < roles.id
+
+Table permissions{
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Table roles_to_permissions{
+  id int [primary key]
+  id_role int
+  id_permissions int
+}
+
+Ref: roles_to_permissions.id_role < roles.id
+Ref: roles_to_permissions.id_permissions < permissions.id
+
+Table menu{
+  id int [primary key]
+  name varchar
+  price float
+  calories int
+  weight int
+  discount float
+  path_to_image varchar
+}
+
+Table special_type {
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Table menu_to_special_type{
+  id int [primary key]
+  id_menu int
+  id_special_type int
+}
+
+Ref: menu_to_special_type.id_menu < menu.id
+Ref: menu_to_special_type.id_special_type < special_type.id
+
+Table ingredients  {
+  id int [primary key]
+  name varchar
+  total_quantity float
+  remaining_quantity float
+  price float
+  last_storage datetime
+}
+
+Table menu_to_ingredients{
+  id int [primary key]
+  id_menu int
+  id_ingredient int
+}
+
+Ref: menu_to_ingredients.id_menu < menu.id
+Ref: menu_to_ingredients.id_ingredient < ingredients.id
+
+Table orders {
+  id int [primary key]
+  table_number int
+  id_status int
+  total_price float
+  paid bool
+  special_price float
+  description_special_price varchar
+  insert_date datetime
+  id_user int
+  customer_feedback varchar
+}
+
+Table status {
+  id int [primary key]
+  name varchar
+  description varchar
+}
+
+Ref: status.id < orders.id_status
+Ref: orders.id_user < users.id
+
+Table order_to_menu{
+  id int [primary key]
+  id_order int
+  id_menu int
+}
+
+Ref: order_to_menu.id_order < orders.id
+Ref: order_to_menu.id_menu < menu.id
+
+Table order_to_menu_to_added_ingredients{
+  id int [primary key]
+  id_order_to_menu int
+  id_ingredient int
+}
+
+Ref: order_to_menu_to_added_ingredients.id_order_to_menu < order_to_menu.id
+Ref: order_to_menu_to_added_ingredients.id_ingredient < ingredients.id
+
+Table order_to_menu_to_removed_ingredients{
+  id int [primary key]
+  id_order_to_menu int
+  id_ingredient int
+}
+
+Ref: order_to_menu_to_removed_ingredients.id_order_to_menu < order_to_menu.id
+Ref: order_to_menu_to_removed_ingredients.id_ingredient < ingredients.id
