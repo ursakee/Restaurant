@@ -44,10 +44,8 @@ const CartItem = ({ item, onClickPlus, onClickMinus }) => {
                 <span className="md:ml-4">+ {ingredient.pret} lei</span>
               </div>
             ))}
-            {scoase.length > 0 && extra.length > 0 ? (
+            {scoase.length > 0 && extra.length > 0 && (
               <div className="w-full border-t-2 border-black relative opacity-50" />
-            ) : (
-              <div />
             )}
             {scoase.map((ingredient) => (
               <div key={ingredient.id} className="text-lg lg:text-2xl font-crimson font-bold text-black opacity-50">

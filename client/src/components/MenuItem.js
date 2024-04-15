@@ -26,7 +26,7 @@ function MenuItem({ id, name, weight, calories, price, image, vegetarian, spicy 
         </div>
       );
     }
-    return <div />;
+    return <></>;
   }
 
   return (

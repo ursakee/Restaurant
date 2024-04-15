@@ -160,7 +160,7 @@ function Item() {
         <div>{itemDetails.calorii + "kcal"}</div>
       </div>
 
-      {itemDetails.eliminabile.length > 0 ? (
+      {itemDetails.eliminabile.length > 0 && (
         <Category text={"Scoateți ingrediente"} childrenStyle={"py-4"}>
           {itemDetails.eliminabile.map((ingredient) => (
             <IngredientCheckbox
@@ -171,11 +171,9 @@ function Item() {
             />
           ))}
         </Category>
-      ) : (
-        <div />
       )}
 
-      {itemDetails.extra.length > 0 ? (
+      {itemDetails.extra.length > 0 && (
         <Category text={"Ingrediente extra"} childrenStyle={"py-4"}>
           {itemDetails.extra.map((ingredient) => (
             <IngredientCheckbox
@@ -188,8 +186,6 @@ function Item() {
             />
           ))}
         </Category>
-      ) : (
-        <div />
       )}
       <Button onClick={handleCheckout} additionalClasses="bg-orange text-black mt-6 mb-8">
         ADAUGAȚI ÎN COȘ ({totalPrice.toFixed(2)} LEI)
