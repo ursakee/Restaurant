@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const OrderItem = ({ item }) => {
   const { imagine, denumire, scoase, extra, cantitate } = item;
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    if (imagine && imagine.data) {
-      const blob = new Blob([Uint8Array.from(imagine.data)], {
-        type: "image/png",
-      });
-      const url = URL.createObjectURL(blob);
-      setImageUrl(url);
-      return () => {
-        URL.revokeObjectURL(url);
-      };
-    }
-  }, [imagine]);
 
   return (
     <div className="py-8 flex flex-col md:flex-row justify-between items-center">
       <div className="flex flex-col md:flex-row items-center px-4 md:w-full">
-        <img src={imageUrl} alt={denumire} className="w-32 lg:w-40 mb-4 md:mb-0 md:mr-10 flex-none" />
+        <img
+          src={`data:image/png;base64,${imagine}`}
+          alt={denumire}
+          className="w-32 lg:w-40 mb-4 md:mb-0 md:mr-10 flex-none"
+        />
         <div className="flex-grow">
           <h3 className="text-3xl lg:text-4xl font-semibold flex justify-between font-crimson text-black">
             {denumire}

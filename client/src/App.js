@@ -18,10 +18,10 @@ import { QRProvider, QRValidator } from "./context/QRContext";
 const App = () => {
   return (
     <Router>
-      <QRProvider>
-        <NavbarProvider>
-          <Navbar />
-          <CartProvider>
+      <CartProvider>
+        <QRProvider>
+          <NavbarProvider>
+            <Navbar />
             <QRValidator>
               <Routes>
                 <Route path="/" element={<Menu />} />
@@ -30,9 +30,9 @@ const App = () => {
                 <Route path="/invalid-qr" element={<InvalidQRCodePage />} />
               </Routes>
             </QRValidator>
-          </CartProvider>
-        </NavbarProvider>
-      </QRProvider>
+          </NavbarProvider>
+        </QRProvider>
+      </CartProvider>
     </Router>
   );
 };

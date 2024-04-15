@@ -21,11 +21,7 @@ export const getFoodDetails = async (id) => {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
-    const imageBlob = new Blob([Uint8Array.from(data.imagine.data)], {
-      type: "image/png",
-    });
-    const imageUrl = URL.createObjectURL(imageBlob);
-    return { ...data, imagine: imageUrl };
+    return data;
   } catch (error) {
     console.error("There was an error fetching the food details!", error);
     throw error;

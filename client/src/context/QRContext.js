@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 // Utils
 import { getQRDataWithExpiry, setQRDataWithExpiry } from "../utils/storageUtils";
 
+// Context
+import { useCart } from "./CartContext";
+
 //API
 import { validateQRCode } from "../services/qrAPI";
 
@@ -12,12 +15,14 @@ export const useQRContext = () => useContext(QRContext);
 
 export const QRProvider = ({ children }) => {
   const [qrData, setQRData] = useState(() => getQRDataWithExpiry("qrData"));
+  const { clearCart } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkExpiry = () => {
       const currentQRData = getQRDataWithExpiry("qrData");
       if (!currentQRData) {
+        clearCart();
         navigate("/invalid-qr", { replace: true });
       }
     };
@@ -26,7 +31,7 @@ export const QRProvider = ({ children }) => {
     const intervalId = setInterval(checkExpiry, 1000);
 
     return () => clearInterval(intervalId);
-  }, [navigate]);
+  }, [navigate, clearCart]);
 
   const updateQRData = (data, expiryDuration) => {
     setQRDataWithExpiry("qrData", data, expiryDuration);
@@ -35,7 +40,6 @@ export const QRProvider = ({ children }) => {
 
   const clearQRData = () => {
     localStorage.removeItem("qrData");
-    setQRData(null);
     navigate("/invalid-qr", { replace: true });
   };
 

@@ -27,7 +27,11 @@ const CartItem = ({ item, onClickPlus, onClickMinus }) => {
   return (
     <div className="py-8 flex flex-col md:flex-row justify-between items-center">
       <div className="flex flex-col md:flex-row items-center px-4 md:w-full">
-        <img src={imagine} alt={denumire} className="w-32 lg:w-40 mb-4 md:mb-0 md:mr-10 flex-none" />
+        <img
+          src={`data:image/png;base64,${imagine}`}
+          alt={denumire}
+          className="w-32 lg:w-40 mb-4 md:mb-0 md:mr-10 flex-none"
+        />
         <div className="flex-grow">
           <h3 className="text-3xl lg:text-4xl font-semibold font-crimson text-black">{denumire}</h3>
           <div className="flex flex-col md:block">

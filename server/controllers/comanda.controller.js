@@ -109,7 +109,7 @@ exports.getOrder = async (req, res) => {
           id_comanda: item.id_comanda,
           cantitate: item.cantitate,
           denumire: item.Mancare.denumire,
-          imagine: item.Mancare.imagine,
+          imagine: item.Mancare.imagine.toString("base64"),
           scoase: scoaseRecords.map((el) => ({
             id: el.Ingredient.id,
             denumire: el.Ingredient.denumire,

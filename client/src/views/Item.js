@@ -138,7 +138,7 @@ function Item() {
           <div className="absolute flex justify-center w-full">
             <img
               className="w-56 lg:w-64 xl:w-72 drop-shadow-orange"
-              src={itemDetails.imagine}
+              src={`data:image/png;base64,${itemDetails.imagine}`}
               alt={itemDetails.denumire}
             />
           </div>

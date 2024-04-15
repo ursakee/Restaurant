@@ -9,10 +9,18 @@ exports.getAllFoods = async (req, res) => {
 
     // Create a map of foods by 'id_categorie'
     const foodsMap = foods.reduce((map, food) => {
-      if (!map[food.id_categorie]) {
-        map[food.id_categorie] = [];
+      const foodData = food.get({ plain: true });
+
+      if (!map[foodData.id_categorie]) {
+        map[foodData.id_categorie] = [];
       }
-      map[food.id_categorie].push(food);
+
+      // Convert blob to base64 if the 'imagine' column exists and is not null
+      if (foodData.imagine) {
+        foodData.imagine = Buffer.from(foodData.imagine).toString("base64");
+      }
+
+      map[foodData.id_categorie].push(foodData);
       return map;
     }, {});
 
@@ -58,7 +66,7 @@ exports.getFoodDetails = async (req, res) => {
 
     const response = {
       denumire: foodDetails.denumire,
-      imagine: foodDetails.imagine,
+      imagine: foodDetails.imagine.toString("base64"),
       gramaj: foodDetails.gramaj,
       calorii: foodDetails.calorii,
       pret: foodDetails.pret,

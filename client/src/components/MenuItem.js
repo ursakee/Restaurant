@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PlusIcon from "../assets/plus.svg";
 import Vegetarian from "../assets/vegan.svg";
 import Spicy from "../assets/spicy.svg";
 
 function MenuItem({ id, name, weight, calories, price, image, vegetarian, spicy }) {
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    if (image && image.data) {
-      const blob = new Blob([Uint8Array.from(image.data)], {
-        type: "image/png",
-      });
-      const url = URL.createObjectURL(blob);
-      setImageUrl(url);
-      return () => {
-        URL.revokeObjectURL(url);
-      };
-    }
-  }, [image]);
-
   function veganSpicy() {
     if (vegetarian && spicy) {
       return (
@@ -51,7 +36,7 @@ function MenuItem({ id, name, weight, calories, price, image, vegetarian, spicy 
     >
       {veganSpicy()}
       <div className="w-full flex justify-center items-center p-3">
-        <img className="w-5/6" src={imageUrl} alt={name} />
+        <img className="w-5/6" src={`data:image/png;base64,${image}`} alt={name} />
       </div>
 
       <div className="px-6 py-4 mb-6">
