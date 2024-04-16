@@ -2,12 +2,14 @@ import { BASE_URL } from "./API";
 
 export const sendOrder = async (tableId, cart) => {
   try {
+    const itemsWithoutImages = cart.map(({ imagine, ...item }) => item);
+
     const response = await fetch(`${BASE_URL}order/send`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ items: cart, tableId: tableId }),
+      body: JSON.stringify({ items: itemsWithoutImages, tableId: tableId }),
     });
 
     if (!response.ok) {

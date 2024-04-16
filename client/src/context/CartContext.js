@@ -8,10 +8,10 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     try {
       const savedCart = localStorage.getItem("cart");
-      return savedCart ? JSON.parse(savedCart) : [];
+      return savedCart ? JSON.parse(savedCart) : { waitingItems: [], orderedItems: [] };
     } catch (error) {
       console.error("Failed to retrieve cart from localStorage:", error);
-      return [];
+      return { waitingItems: [], orderedItems: [] };
     }
   });
 
@@ -25,7 +25,10 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (item) => {
     setCart((prevCart) => {
-      const newCart = [...prevCart, item];
+      const newCart = {
+        ...prevCart,
+        waitingItems: [...prevCart.waitingItems, item],
+      };
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
@@ -33,7 +36,11 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = (itemId) => {
     setCart((prevCart) => {
-      const newCart = prevCart.filter((item) => item.id !== itemId);
+      const newWaitingItems = prevCart.waitingItems.filter((item) => item.id !== itemId);
+      const newCart = {
+        ...prevCart,
+        waitingItems: newWaitingItems,
+      };
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
@@ -44,15 +51,27 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateItemQuantity = (itemId, newQuantity) => {
-    setCart((currentCart) =>
-      currentCart.map((item) => {
-        return item.id === itemId ? { ...item, cantitate: newQuantity } : item;
-      })
-    );
+    setCart((prevCart) => {
+      const newWaitingItems = prevCart.waitingItems.map((item) =>
+        item.id === itemId ? { ...item, cantitate: newQuantity } : item
+      );
+      return { ...prevCart, waitingItems: newWaitingItems };
+    });
+  };
+
+  const processOrder = () => {
+    setCart((prevCart) => {
+      const newCart = {
+        waitingItems: [],
+        orderedItems: [...prevCart.orderedItems, ...prevCart.waitingItems],
+      };
+      localStorage.setItem("cart", JSON.stringify(newCart));
+      return newCart;
+    });
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, updateItemQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, updateItemQuantity, processOrder }}>
       {children}
     </CartContext.Provider>
   );

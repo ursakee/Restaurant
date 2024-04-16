@@ -18,7 +18,7 @@ function Category({ text, children, uppercase, childrenStyle, defaultExpanded })
     <div className="flex flex-col items-center px-10 py-5">
       <div className="flex justify-between w-full cursor-pointer" onClick={handleToggle}>
         <div
-          className={`text-2xl md:text-3xl lg:text-4xl font-crimson text-black font-semibold ${
+          className={`text-2xl md:text-3xl lg:text-4xl font-crimson text-black font-bold ${
             uppercase ? "uppercase" : ""
           } ml-2`}
         >
@@ -38,7 +38,6 @@ function Category({ text, children, uppercase, childrenStyle, defaultExpanded })
   );
 }
 
-// Define default props for the component
 Category.defaultProps = {
   defaultExpanded: false,
 };

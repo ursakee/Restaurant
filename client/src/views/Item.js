@@ -67,14 +67,14 @@ function Item() {
       .filter(([id, isChecked]) => isChecked)
       .map(([id]) => {
         const ingredient = itemDetails.extra.find((i) => i.id === id);
-        return { id, nume: ingredient.denumire, pret: ingredient.pret };
+        return { id, denumire: ingredient.denumire, pret: ingredient.pret };
       });
 
     const removedDetails = Array.from(checkedRemoved)
       .filter(([id, isChecked]) => isChecked)
       .map(([id]) => {
         const ingredient = itemDetails.eliminabile.find((i) => i.id === id);
-        return { id, nume: ingredient.denumire };
+        return { id, denumire: ingredient.denumire };
       });
 
     const orderSummary = {

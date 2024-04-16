@@ -33,14 +33,14 @@ const CartItem = ({ item, onClickPlus, onClickMinus }) => {
           className="w-32 lg:w-40 mb-4 md:mb-0 md:mr-10 flex-none"
         />
         <div className="flex-grow">
-          <h3 className="text-3xl lg:text-4xl font-semibold font-crimson text-black">{denumire}</h3>
+          <h3 className="text-3xl lg:text-4xl text-center font-semibold font-crimson text-black">{denumire}</h3>
           <div className="flex flex-col md:block">
             {extra.map((ingredient) => (
               <div
                 key={ingredient.id}
                 className="flex justify-between items-center text-lg lg:text-2xl font-crimson font-bold text-black opacity-50"
               >
-                <span>+ {ingredient.nume}</span>
+                <span>+ {ingredient.denumire}</span>
                 <span className="md:ml-4">+ {ingredient.pret} lei</span>
               </div>
             ))}
@@ -49,7 +49,7 @@ const CartItem = ({ item, onClickPlus, onClickMinus }) => {
             )}
             {scoase.map((ingredient) => (
               <div key={ingredient.id} className="text-lg lg:text-2xl font-crimson font-bold text-black opacity-50">
-                - {ingredient.nume}
+                - {ingredient.denumire}
               </div>
             ))}
           </div>

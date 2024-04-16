@@ -14,17 +14,18 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Button from "../components/Button";
 import CartItem from "../components/CartItem";
 import OrderItem from "../components/OrderItem";
+import SubCategory from "../components/SubCategory";
 
 function Order() {
   const { qrData } = useQRContext();
   const { setShowBackArrow } = useNavbarContext();
-  const { cart, removeFromCart, updateItemQuantity } = useCart();
+  const { cart, removeFromCart, updateItemQuantity, processOrder } = useCart();
 
   const [isLoading, setIsLoading] = useState(true);
   const [tableOrder, setTableOrder] = useState({ items: [] });
 
   const handleIncreaseQuantity = (itemId) => {
-    const item = cart.find((item) => item.id === itemId);
+    const item = cart.waitingItems.find((item) => item.id === itemId);
     if (item) {
       const newQuantity = item.cantitate + 1;
       updateItemQuantity(itemId, newQuantity);
@@ -32,7 +33,7 @@ function Order() {
   };
 
   const handleDecreaseQuantity = (itemId) => {
-    const item = cart.find((item) => item.id === itemId);
+    const item = cart.waitingItems.find((item) => item.id === itemId);
     if (item) {
       if (item.cantitate > 1) {
         const newQuantity = item.cantitate - 1;
@@ -79,14 +80,25 @@ function Order() {
         </div>
       </div>
       <Category text={"Comanda mea"} uppercase={true} defaultExpanded={true}>
-        {cart.map((item) => (
-          <CartItem
-            key={item.id}
-            item={item}
-            onClickPlus={() => handleIncreaseQuantity(item.id)}
-            onClickMinus={() => handleDecreaseQuantity(item.id)}
-          />
-        ))}
+        {cart.waitingItems.length > 0 && (
+          <SubCategory text={"În coș"} defaultExpanded={true}>
+            {cart.waitingItems.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onClickPlus={() => handleIncreaseQuantity(item.id)}
+                onClickMinus={() => handleDecreaseQuantity(item.id)}
+              />
+            ))}
+          </SubCategory>
+        )}
+        {cart.orderedItems.length > 0 && (
+          <SubCategory text={"Comandate"} defaultExpanded={true}>
+            {cart.orderedItems.map((item) => (
+              <OrderItem key={item.id} item={item} />
+            ))}
+          </SubCategory>
+        )}
       </Category>
       <Category text={"Comanda mesei"} uppercase={true} defaultExpanded={true}>
         {tableOrder &&
@@ -96,7 +108,8 @@ function Order() {
       <Button
         additionalClasses="bg-orange text-black my-4"
         onClick={() => {
-          sendOrder(qrData.tableId, cart);
+          sendOrder(qrData.tableId, cart.waitingItems);
+          processOrder();
         }}
       >
         TRIMITE COMANDA
