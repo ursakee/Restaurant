@@ -36,7 +36,7 @@ function MenuItem({ id, name, weight, calories, price, image, vegetarian, spicy 
     >
       {veganSpicy()}
       <div className="w-full flex justify-center items-center p-3">
-        <img className="w-5/6" src={`data:image/png;base64,${image}`} alt={name} />
+        <img className="w-2/3" src={`data:image/png;base64,${image}`} alt={name} />
       </div>
 
       <div className="px-6 py-4 mb-6">
