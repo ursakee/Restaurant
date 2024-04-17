@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 // Context
-import { useNavbarContext } from "../context/NavbarContext";
+import { useNavbar } from "../context/NavbarContext";
 import { useCart } from "../context/CartContext";
 
 // Components
@@ -17,7 +17,7 @@ import { getFoodDetails } from "../services/foodsAPI";
 
 function Item() {
   let { id } = useParams();
-  const { setShowBackArrow } = useNavbarContext();
+  const { setShowBackArrow } = useNavbar();
   const { addToCart } = useCart();
   const navigate = useNavigate();
 

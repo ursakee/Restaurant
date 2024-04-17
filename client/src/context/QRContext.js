@@ -11,7 +11,7 @@ import { useCart } from "./CartContext";
 import { validateQRCode } from "../services/qrAPI";
 
 export const QRContext = createContext();
-export const useQRContext = () => useContext(QRContext);
+export const useQR = () => useContext(QRContext);
 
 export const QRProvider = ({ children }) => {
   const [qrData, setQRData] = useState(() => getQRDataWithExpiry("qrData"));
@@ -49,7 +49,7 @@ export const QRProvider = ({ children }) => {
 export const QRValidator = ({ children }) => {
   const [isQRValidated, setIsQRValidated] = useState(false);
 
-  const { qrData, updateQRData, clearQRData } = useQRContext();
+  const { qrData, updateQRData, clearQRData } = useQR();
 
   const navigate = useNavigate();
 

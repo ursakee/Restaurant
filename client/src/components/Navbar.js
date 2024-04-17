@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavbarContext } from "../context/NavbarContext";
+import { useNavbar } from "../context/NavbarContext";
 import { useNavigate } from "react-router-dom";
 
 // Assets
@@ -7,7 +7,7 @@ import Logo from "../assets/logo.svg";
 import BackArrow from "../assets/back-arrow.svg";
 
 function Navbar() {
-  const { showBackArrow, setShowBackArrow } = useNavbarContext();
+  const { showBackArrow, setShowBackArrow } = useNavbar();
   const navigate = useNavigate();
 
   const goBack = () => {

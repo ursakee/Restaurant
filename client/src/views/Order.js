@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 // Context
-import { useNavbarContext } from "../context/NavbarContext";
-import { useQRContext } from "../context/QRContext";
+import { useNavbar } from "../context/NavbarContext";
+import { useQR } from "../context/QRContext";
 import { useCart } from "../context/CartContext";
 
 // Service
@@ -17,8 +17,8 @@ import OrderItem from "../components/OrderItem";
 import SubCategory from "../components/SubCategory";
 
 function Order() {
-  const { qrData } = useQRContext();
-  const { setShowBackArrow } = useNavbarContext();
+  const { qrData } = useQR();
+  const { setShowBackArrow } = useNavbar();
   const { cart, removeFromCart, updateItemQuantity, processOrder } = useCart();
 
   const [isLoading, setIsLoading] = useState(true);
