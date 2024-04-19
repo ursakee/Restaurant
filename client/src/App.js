@@ -14,23 +14,26 @@ import InvalidQRCodePage from "./views/InvalidQRCode";
 import { NavbarProvider } from "./context/NavbarContext";
 import { CartProvider } from "./context/CartContext";
 import { QRProvider, QRValidator } from "./context/QRContext";
+import { SocketProvider } from "./context/SocketContext";
 
 const App = () => {
   return (
     <Router>
       <CartProvider>
         <QRProvider>
-          <NavbarProvider>
-            <Navbar />
-            <QRValidator>
-              <Routes>
-                <Route path="/" element={<Menu />} />
-                <Route path="/item/:id" element={<Item />} />
-                <Route path="/order" element={<Order />} />
-                <Route path="/invalid-qr" element={<InvalidQRCodePage />} />
-              </Routes>
-            </QRValidator>
-          </NavbarProvider>
+          <SocketProvider>
+            <NavbarProvider>
+              <Navbar />
+              <QRValidator>
+                <Routes>
+                  <Route path="/" element={<Menu />} />
+                  <Route path="/item/:id" element={<Item />} />
+                  <Route path="/order" element={<Order />} />
+                  <Route path="/invalid-qr" element={<InvalidQRCodePage />} />
+                </Routes>
+              </QRValidator>
+            </NavbarProvider>
+          </SocketProvider>
         </QRProvider>
       </CartProvider>
     </Router>

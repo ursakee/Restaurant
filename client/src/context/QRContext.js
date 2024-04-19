@@ -6,6 +6,7 @@ import { getQRDataWithExpiry, setQRDataWithExpiry } from "../utils/storageUtils"
 
 // Context
 import { useCart } from "./CartContext";
+import { useSocket } from "./SocketContext";
 
 //API
 import { validateQRCode } from "../services/qrAPI";
@@ -50,6 +51,7 @@ export const QRValidator = ({ children }) => {
   const [isQRValidated, setIsQRValidated] = useState(false);
 
   const { qrData, updateQRData, clearQRData } = useQR();
+  const { emitEvent } = useSocket();
 
   const navigate = useNavigate();
 
@@ -63,8 +65,9 @@ export const QRValidator = ({ children }) => {
     if (!isQRValidated && tableId && signature) {
       validateQRCode(tableId, signature).then((data) => {
         if (data.valid) {
-          updateQRData({ tableId, signature }, timeUntillExpired);
+          updateQRData({ tableId }, timeUntillExpired);
           setIsQRValidated(true);
+          emitEvent("join-table", tableId);
           navigate("/", { replace: true });
         } else {
           clearQRData();
@@ -72,7 +75,7 @@ export const QRValidator = ({ children }) => {
         }
       });
     }
-  }, [qrData, updateQRData, clearQRData, navigate, isQRValidated]);
+  }, [qrData, updateQRData, clearQRData, navigate, isQRValidated, emitEvent]);
 
   return <>{children}</>;
 };

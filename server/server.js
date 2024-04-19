@@ -1,11 +1,19 @@
 require("dotenv").config();
 
+const http = require("http");
 const express = require("express");
-const app = express();
 const cors = require("cors");
-const port = process.env.PORT;
+const initSockets = require("./sockets");
 
-app.use(cors());
+const port = process.env.PORT;
+const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Routes
@@ -21,6 +29,9 @@ app.use("/api", qrRoutes);
 const comandaRoutes = require("./routes/comanda.route");
 app.use("/api", comandaRoutes);
 
-app.listen(port, () => {
+const server = http.createServer(app);
+initSockets(server);
+
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

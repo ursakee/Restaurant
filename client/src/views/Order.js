@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavbar } from "../context/NavbarContext";
 import { useQR } from "../context/QRContext";
 import { useCart } from "../context/CartContext";
+import { useSocket } from "../context/SocketContext";
 
 // Service
 import { sendOrder, getTableOrder } from "../services/orderAPI";
@@ -20,6 +21,7 @@ function Order() {
   const { qrData } = useQR();
   const { setShowBackArrow } = useNavbar();
   const { cart, removeFromCart, updateItemQuantity, processOrder } = useCart();
+  const { emitEvent } = useSocket();
 
   const [isLoading, setIsLoading] = useState(true);
   const [tableOrder, setTableOrder] = useState({ items: [] });
@@ -42,6 +44,10 @@ function Order() {
         removeFromCart(itemId);
       }
     }
+  };
+
+  const handleRequestBill = () => {
+    emitEvent("request-bill", qrData.tableId);
   };
 
   useEffect(() => {
@@ -114,7 +120,9 @@ function Order() {
       >
         TRIMITE COMANDA
       </Button>
-      <Button additionalClasses="bg-black text-orange mb-48">CERE NOTA</Button>
+      <Button onClick={handleRequestBill} additionalClasses="bg-black text-orange mb-48">
+        CERE NOTA
+      </Button>
     </div>
   );
 }
