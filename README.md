@@ -15,6 +15,10 @@ Welcome to the Restaurant application! This project is a comprehensive solution 
 ## Overview
 The Restaurant application provides a seamless experience for both customers and restaurant staff. Customers can view the menu, place orders, and get QR code-based table service, while staff can manage orders, menu items, and categories efficiently.
 
+## Figma Design
+
+[Link](https://www.figma.com/design/dmQAO4YuG34yfOV3UZwvHh/Untitled?node-id=0-1&t=JeRwQb4IhSk2hg66-1)
+
 ## Features
 - **Dynamic Menu:** View and manage a dynamic menu with various categories and food items.
 - **Order Management:** Place and manage orders with options to customize ingredients.
