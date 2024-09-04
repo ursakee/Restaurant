@@ -7,7 +7,7 @@ const initSockets = require("./sockets");
 
 const port = process.env.PORT;
 const app = express();
-// link
+
 app.use(
   cors({
     origin: "http://localhost:3000",
